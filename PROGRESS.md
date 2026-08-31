@@ -66,7 +66,7 @@ Status: ✅ done · 🔨 in progress · ⬜ upcoming
 
 | # | Module | Status | Notes |
 |---|---|---|---|
-| M0 | Set up Python from scratch (install, PATH, `py` vs `python`, `venv`, `pip`, editor, Ruff, repo skeleton) | 🔨 | |
+| M0 | Set up Python from scratch (install, PATH, `py` vs `python`, `venv`, `pip`, editor, Ruff, repo skeleton) | ✅ | |
 | M1 | Python basics I — values, variables, types, functions, control flow, strings | ⬜ | |
 | M2 | Python basics II — collections, comprehensions, iteration, file I/O; build a LoRa sensor-log parser | ⬜ | |
 | M3 | Make it a real program — modules/packages, type hints, exceptions, `logging`, `argparse`, `pytest` | ⬜ | |
@@ -118,7 +118,13 @@ Newest entries at the top. Template:
 - **Follow-ups:** anything to revisit
 ```
 
-_No exercises completed yet._
+```
+### 2026-08-29 — m0 — setup
+- **Built:** basic test file to check if ruff formatting and linting is working.
+- **Learned:** Setup of python within venv. Troubleshooting of powershell execution policies. Also set up ruff formatter within vscode.
+- **Struggled with:** N/A
+- **Follow-ups:** N/A
+```
 
 ---
 
