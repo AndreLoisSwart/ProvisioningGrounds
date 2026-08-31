@@ -120,9 +120,9 @@ Newest entries at the top. Template:
 
 ```
 ### 2026-08-29 — m0 — setup
-- **Built:** basic test file to check if ruff formatting and linting is working.
-- **Learned:** Setup of python within venv. Troubleshooting of powershell execution policies. Also set up ruff formatter within vscode.
-- **Struggled with:** N/A
+- **Built:** basic test file to check if ruff formatting and linting is working. An isolated .venv, a working `.vscode/settings.json` (interpreter pinning + format-on-save), a root-level .gitignore scoped across all future modules, and five exercise briefs + a module README
+- **Learned:** Setup of python within venv. Troubleshooting of powershell execution policies. Also set up ruff formatter within vscode. py vs python resolution. gitignore pattern anchoring works across subfolders.
+- **Struggled with:** Omitted the path when setting up a venv which mixed the venv internals with the module folders. Powershell execution-policy block. gitignore with a `*` within subfolders that ignored all within that folder.
 - **Follow-ups:** N/A
 ```
 
