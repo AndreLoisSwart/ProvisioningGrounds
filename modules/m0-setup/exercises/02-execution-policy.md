@@ -12,4 +12,4 @@
 
 ## How it works
 - `Get-ExecutionPolicy -List` provides a list of scopes
-- `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` adjusts the scope to a safe enough policy that allows a user to run scripts that the user wrote, or came with tools like `venv` locally, but blocks scripts that was downloaded from the internet. 
+- `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` adjusts the scope to a safe enough policy that allows a user to run scripts that the user wrote, or came with tools like `venv` locally, but blocks scripts that was downloaded from the internet, rather than running Powershell as admin, which will let you change the LocalMachine scope, affecting every user and every script on the machine. This is more than what is needed for running scripts within a venv within my own project. 

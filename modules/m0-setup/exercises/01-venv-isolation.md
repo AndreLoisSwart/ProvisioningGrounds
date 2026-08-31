@@ -13,4 +13,4 @@
 
 ## How it works
 - Using the `python` command, Powershell does a PATH lookup, and whichever python.exe is first in your list of folders will be used. Running a venv exploits this mechanism by putting the current venv's Scripts folder to the front of the PATH list. 
-- venv provides true isolation by having it's own `site-packages` folder. pip show <package> outputs evidence that the package in question is indeed isolated to the specific venv folder.
+- venv provides true isolation by having its own `site-packages` folder. pip show <package> outputs evidence that the package in question is indeed isolated to the specific venv folder.
