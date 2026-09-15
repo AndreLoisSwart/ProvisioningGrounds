@@ -68,7 +68,7 @@ Status: ✅ done · 🔨 in progress · ⬜ upcoming
 |---|---|---|---|
 | M0 | Set up Python from scratch (install, PATH, `py` vs `python`, `venv`, `pip`, editor, Ruff, repo skeleton) | ✅ | |
 | M1 | Python basics I — values, variables, types, functions, control flow, strings | ✅ | |
-| M2 | Python basics II — collections, comprehensions, iteration, file I/O; build a LoRa sensor-log parser | 🔨 | |
+| M2 | Python basics II — collections, comprehensions, iteration, file I/O; build a LoRa sensor-log parser | ✅ | |
 | M3 | Make it a real program — modules/packages, type hints, exceptions, `logging`, `argparse`, `pytest` | ⬜ | |
 
 ### Phase 2 — Working Python + first IaC
@@ -119,6 +119,12 @@ Newest entries at the top. Template:
 ```
 
 ```
+### 2026-09-15 — m2 — LoRa sensor-log parser
+- **Built:** a parser for a LoRa gateway log file — reads `timestamp,node,temp=X,batt=Y` lines into `dict` records, dedupes node IDs, and reports reading count / distinct nodes / average battery voltage.
+- **Learned:** `pathlib.Path(__file__).resolve().parent` for machine-independent file paths (vs. a hardcoded absolute path, which broke as soon as it hit a second machine); list vs. set comprehensions; `float()` silently strips surrounding whitespace during parsing; `set` iteration order isn't guaranteed — `sorted()` fixes that without giving up dedup; removing a redundant `float()` wrapping an already-`float` return.
+- **Struggled with:** first draft hardcoded an absolute path tied to one specific machine's home directory — surfaced directly by the multi-machine git workflow this session ran into.
+- **Follow-ups:** N/A
+
 ### 2026-09-15 — m1 — LoRa packet builder
 - **Built:** a packet builder/validator for a handheld LoRa device — cleans raw `(callsign, message)` pairs (strip/uppercase callsign, normalize whitespace in message), builds `"CALLSIGN:message"`, and reports fit against a payload-size budget.
 - **Learned:** `str.split()`/`" ".join()` as the idiom for collapsing arbitrary whitespace runs (vs. `.replace()`, which only fixes exact-length matches); booleans as first-class values worth naming, not just inline `if` conditions; tuple unpacking in a `for` loop; `ruff check` vs `ruff format` are different tools with different feedback (silent vs. diagnostic).
