@@ -67,8 +67,8 @@ Status: ✅ done · 🔨 in progress · ⬜ upcoming
 | # | Module | Status | Notes |
 |---|---|---|---|
 | M0 | Set up Python from scratch (install, PATH, `py` vs `python`, `venv`, `pip`, editor, Ruff, repo skeleton) | ✅ | |
-| M1 | Python basics I — values, variables, types, functions, control flow, strings | ⬜ | |
-| M2 | Python basics II — collections, comprehensions, iteration, file I/O; build a LoRa sensor-log parser | ⬜ | |
+| M1 | Python basics I — values, variables, types, functions, control flow, strings | ✅ | |
+| M2 | Python basics II — collections, comprehensions, iteration, file I/O; build a LoRa sensor-log parser | 🔨 | |
 | M3 | Make it a real program — modules/packages, type hints, exceptions, `logging`, `argparse`, `pytest` | ⬜ | |
 
 ### Phase 2 — Working Python + first IaC
@@ -119,6 +119,18 @@ Newest entries at the top. Template:
 ```
 
 ```
+### 2026-09-15 — m1 — LoRa packet builder
+- **Built:** a packet builder/validator for a handheld LoRa device — cleans raw `(callsign, message)` pairs (strip/uppercase callsign, normalize whitespace in message), builds `"CALLSIGN:message"`, and reports fit against a payload-size budget.
+- **Learned:** `str.split()`/`" ".join()` as the idiom for collapsing arbitrary whitespace runs (vs. `.replace()`, which only fixes exact-length matches); booleans as first-class values worth naming, not just inline `if` conditions; tuple unpacking in a `for` loop; `ruff check` vs `ruff format` are different tools with different feedback (silent vs. diagnostic).
+- **Struggled with:** `.replace("  ", " ")` looked like it fixed whitespace but silently failed on 3+ space runs — only surfaced by deliberately testing an edge case, not from the original sample data.
+- **Follow-ups:** N/A
+
+### 2026-09-15 — m1 — vacuum auto-on decision logic
+- **Built:** decision logic for a shop-vacuum auto-on relay — classifies a current reading as idle/running/fault against named thresholds and prints a readable status line per sample reading.
+- **Learned:** splitting "decide" and "format" into separate functions; `elif` branches can assume earlier conditions already failed (no need to re-check the lower bound); tuple vs. list literals; named constants over magic numbers; `if __name__ == "__main__":` and how `__name__` actually gets set; type hints are unenforced at runtime.
+- **Struggled with:** first attempt named a tuple `list_of_amps` — mismatch between the literal used and the name given to it.
+- **Follow-ups:** N/A
+
 ### 2026-08-29 — m0 — setup
 - **Built:** basic test file to check if ruff formatting and linting is working. An isolated .venv, a working `.vscode/settings.json` (interpreter pinning + format-on-save), a root-level .gitignore scoped across all future modules, and five exercise briefs + a module README
 - **Learned:** Setup of python within venv. Troubleshooting of powershell execution policies. Also set up ruff formatter within vscode. py vs python resolution. gitignore pattern anchoring works across subfolders.
@@ -133,3 +145,4 @@ Newest entries at the top. Template:
 | Date | What happened |
 |---|---|
 | 2026-08-28 | Bootcamp planned: goals, teaching contract, environment decisions, module map. Created `CLAUDE.md` and this file. |
+| 2026-09-14/15 | M1 completed — two exercises (vacuum auto-on logic, LoRa packet builder), each through several review/revise passes. Also picked up a second dev machine (CachyOS Linux, Code – OSS editor, fish shell) alongside the original Windows 11 box. |
