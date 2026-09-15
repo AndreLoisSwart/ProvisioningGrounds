@@ -69,7 +69,7 @@ Status: ✅ done · 🔨 in progress · ⬜ upcoming
 | M0 | Set up Python from scratch (install, PATH, `py` vs `python`, `venv`, `pip`, editor, Ruff, repo skeleton) | ✅ | |
 | M1 | Python basics I — values, variables, types, functions, control flow, strings | ✅ | |
 | M2 | Python basics II — collections, comprehensions, iteration, file I/O; build a LoRa sensor-log parser | ✅ | |
-| M3 | Make it a real program — modules/packages, type hints, exceptions, `logging`, `argparse`, `pytest` | ⬜ | |
+| M3 | Make it a real program — modules/packages, type hints, exceptions, `logging`, `argparse`, `pytest` | 🔨 | |
 
 ### Phase 2 — Working Python + first IaC
 
@@ -119,6 +119,12 @@ Newest entries at the top. Template:
 ```
 
 ```
+### 2026-09-15 — m3 — package the LoRa parser + real type checking
+- **Built:** restructured the M2 LoRa parser into a `lorapackage` package (`parser.py` / `reporter.py` / `__main__.py`) with a dedicated per-module venv, checked with `mypy`.
+- **Learned:** running `mypy` per-file misses cross-file problems — the broken import in `__main__.py` only surfaced by running the program and by checking the right scope; relative vs. absolute imports; `python -m <package>` specifically targets `<package>/__main__.py` and only works with relative imports because it establishes a parent-package context that direct execution doesn't; a `Path(__file__)`-relative path needs adjusting when the file itself moves to a different directory depth; `mypy`'s default mode doesn't require every parameter to be annotated.
+- **Struggled with:** trusted that a fix was correct because the reasoning checked out on paper, without re-running the program — had to be pushed twice to actually execute and verify rather than assume.
+- **Follow-ups:** M3 continues — exceptions, `logging`, `argparse`, `pytest` still to come.
+
 ### 2026-09-15 — m2 — LoRa sensor-log parser
 - **Built:** a parser for a LoRa gateway log file — reads `timestamp,node,temp=X,batt=Y` lines into `dict` records, dedupes node IDs, and reports reading count / distinct nodes / average battery voltage.
 - **Learned:** `pathlib.Path(__file__).resolve().parent` for machine-independent file paths (vs. a hardcoded absolute path, which broke as soon as it hit a second machine); list vs. set comprehensions; `float()` silently strips surrounding whitespace during parsing; `set` iteration order isn't guaranteed — `sorted()` fixes that without giving up dedup; removing a redundant `float()` wrapping an already-`float` return.
