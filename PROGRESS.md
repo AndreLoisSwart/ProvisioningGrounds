@@ -119,6 +119,12 @@ Newest entries at the top. Template:
 ```
 
 ```
+### 2026-09-17 — m3 — custom exceptions + logging
+- **Built:** `MalformedLogLineError` (a `ValueError` subclass) raised on bad data in `read_sensor_data`, propagated all the way to an uncaught exception in `main()` (deliberately no try/except there); `logging` configured once in `__main__.py` and used via `getLogger(__name__)` in each module; diagnostics via `logger.info()`/`.error()`, the actual report still via `print()`.
+- **Learned:** subclass `except` matching only works one direction (a subclass instance satisfies the parent's `except`, not the reverse) — you have to explicitly raise your own type, Python won't infer it; EAFP over returning `None` as a failure sentinel, and why a swallowed/misdirected failure (via `None` + a bare `except Exception`) is worse than a loud crash; propagation is Python's default and needs nothing extra — the bug was two layers of code actively suppressing it; `logging.basicConfig()` only takes effect on its first call process-wide, so it belongs in the entry point only, not in library-ish modules.
+- **Struggled with:** initially tried to catch the custom exception type directly around code that only ever threw the generic built-in one; converting a caught error into a `None` return instead of raising didn't even achieve the intended "stop" behavior, since nothing downstream was checking for it — the failure surfaced as an unrelated `TypeError` two calls away, then got silently swallowed by a bare `except Exception: return`.
+- **Follow-ups:** M3 continues — `argparse`, `pytest` still to come.
+
 ### 2026-09-15 — m3 — package the LoRa parser + real type checking
 - **Built:** restructured the M2 LoRa parser into a `lorapackage` package (`parser.py` / `reporter.py` / `__main__.py`) with a dedicated per-module venv, checked with `mypy`.
 - **Learned:** running `mypy` per-file misses cross-file problems — the broken import in `__main__.py` only surfaced by running the program and by checking the right scope; relative vs. absolute imports; `python -m <package>` specifically targets `<package>/__main__.py` and only works with relative imports because it establishes a parent-package context that direct execution doesn't; a `Path(__file__)`-relative path needs adjusting when the file itself moves to a different directory depth; `mypy`'s default mode doesn't require every parameter to be annotated.
