@@ -119,6 +119,12 @@ Newest entries at the top. Template:
 ```
 
 ```
+### 2026-09-18 — m3 — argparse CLI
+- **Built:** `-f`/`--file` and `-v`/`--verbose` command-line options for the LoRa parser — an explicit file path overrides the `build_path()` default, verbose toggles `DEBUG` logging.
+- **Learned:** `argparse` generates `--help` output for free from `add_argument()` calls; `logging.info()`/`.debug()` are unconditionally bound to the root logger regardless of any named logger defined nearby — caught by literally reading the logger name in the console output (`root` vs. the expected module name), not by inspecting the code; `__name__` is `"__main__"` specifically for whichever file is the actual entry point (here, via `python -m lorapackage`) — same M1 lesson, new context.
+- **Struggled with:** defined `logger = logging.getLogger(__name__)` in the entry point but called the top-level `logging.info()`/`.debug()` functions instead of the instance — silently logged through the root logger rather than erroring, so it only surfaced by comparing logger names across the actual output.
+- **Follow-ups:** M3 continues — `pytest` still to come, then the module wraps.
+
 ### 2026-09-17 — m3 — custom exceptions + logging
 - **Built:** `MalformedLogLineError` (a `ValueError` subclass) raised on bad data in `read_sensor_data`, propagated all the way to an uncaught exception in `main()` (deliberately no try/except there); `logging` configured once in `__main__.py` and used via `getLogger(__name__)` in each module; diagnostics via `logger.info()`/`.error()`, the actual report still via `print()`.
 - **Learned:** subclass `except` matching only works one direction (a subclass instance satisfies the parent's `except`, not the reverse) — you have to explicitly raise your own type, Python won't infer it; EAFP over returning `None` as a failure sentinel, and why a swallowed/misdirected failure (via `None` + a bare `except Exception`) is worse than a loud crash; propagation is Python's default and needs nothing extra — the bug was two layers of code actively suppressing it; `logging.basicConfig()` only takes effect on its first call process-wide, so it belongs in the entry point only, not in library-ish modules.
